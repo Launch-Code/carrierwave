@@ -138,6 +138,23 @@ end
               end
             end
 
+            it "should be deletable" do
+              @fog_file.delete
+              @directory.files.head(store_path).should == nil
+            end
+
+            context "when the file has been deleted" do
+              before do
+                @fog_file.delete
+              end
+
+              it "should not error getting the file size" do
+                expect {
+                  @fog_file.size
+                }.not_to raise_error
+              end
+            end
+
             context "when a string" do
               let(:asset_host) { "http://foo.bar" }
 
